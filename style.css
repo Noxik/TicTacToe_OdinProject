@@ -1,4 +1,54 @@
-* {margin: 0;
-padding: 0}
+* {
+    margin: 0;
+    padding: 0
+}
 
-body {background-color: aquamarine;}
+body {
+    background-color: aquamarine;
+}
+
+label {
+    margin-top: 1rem
+}
+
+.container {
+    display: grid;
+    
+    grid-template: auto auto / repeat(3, 1fr);
+    place-items: center;
+    gap: 20px;
+}
+
+.players {
+    grid-column: 1/4;
+    display: flex;
+    flex-direction: column;
+}
+
+.player1 {
+    grid-column: 1
+}
+
+.board {
+    grid-column: 2;
+    display: grid;
+    grid-template: repeat(3, 100px) / repeat(3, 100px);
+    gap: 2px;
+}
+
+.field {
+    background-color: aliceblue;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+}
+
+.field:disabled {
+    color:blueviolet;
+    font-size: 2rem;
+    
+}
+
+.field:hover {
+    background-color: rgb(218, 238, 255);
+}
