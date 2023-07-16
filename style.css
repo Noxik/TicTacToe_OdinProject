@@ -7,39 +7,76 @@ body {
     background-color: #7fdbff;
 }
 
-label {
-    margin-top: 1rem
+p {
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 
-.container {
-    display: grid;
+label, p {
+    margin-bottom: 1rem
+}
+
+.btn {
+    padding: 16px 32px;
+    border-radius: 48px;
+    background-color: #ffea8c;
+    border: 1px solid #ffea8c;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.btn:hover {
+    background-color: #f3ffac;
+    border: 1px solid #f3ffac;
+    cursor: pointer;
+}
+
+#mainboard {
+    display: none;
     grid-template: auto auto / repeat(3, 1fr);
-    grid-template-areas:
-    "... plyers ... "
-    "playerOne board playerTwo" ;
-/*    place-items: center; */
-    gap: 20px;
+    gap: 16px;
+    margin: 10vh;
+    place-content: center;
 }
 
-.players {
+#result {
     grid-column: 1/4;
+    place-self: center;
+    font-size: 2rem;
+    font-weight: 700;
+}
+#players {
     display: flex;
     flex-direction: column;
-    place-items: center
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+}
+
+#startBtn {
+    margin-top: 5vh;
+    grid-column: 1/4;
+    display: flex;
+    justify-self: center;
+    padding: 12px 24px
 }
 
 #player1, #player2 {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-
+    border-radius: 50px;
 }
 
 .board {
     grid-column: 2;
     display: grid;
     grid-template: repeat(3, 100px) / repeat(3, 100px);
-    gap: 2px;
+    gap: 1px;
+   place-content: center;
 }
 
 .field {
