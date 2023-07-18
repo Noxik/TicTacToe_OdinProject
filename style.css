@@ -33,10 +33,12 @@ label, p {
 
 #mainboard {
     display: none;
-    grid-template: repeat(3, auto) / repeat(3, 1fr);
+   /*  grid-template: repeat(3, auto) / repeat(3, 1fr); */
     gap: 16px;
     margin: 10vh;
     place-content: center;
+
+    grid-template: repeat(3, auto) / repeat(3, minmax(200px, 400px));
 }
 
 #result {
@@ -78,6 +80,7 @@ label, p {
     grid-template: repeat(3, 100px) / repeat(3, 100px);
     gap: 1px;
    place-content: center;
+   z-index: 0;
 }
 
 .field {
