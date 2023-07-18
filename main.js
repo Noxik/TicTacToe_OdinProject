@@ -121,26 +121,20 @@ function checkWinner() {
 
 function playAgain() {
     winner = undefined
-    turn = 0;
     gameBoard.board = [1,2,3,4,5,6,7,8,9];
-    result.textContent = ""
 
+    // clear players name divs
     playerOneName.parentElement.style.backgroundColor =""
     playerTwoName.parentElement.style.backgroundColor =""
 
-    let buttons = document.querySelectorAll("button")
-    for (let i=0; i<buttons.length; i++) {
-        buttons[i].disabled = false
-    }
-    let fields = document.querySelectorAll(".field");
-    for (let i=0; i<fields.length; i++) {
-        fields[i].textContent = ""
-    }
-
+    // clear board
     for (let i=0; i<boardDiv.length; i++) {
-        boardDiv[i].style.backgroundColor = ""
+        boardDiv[i].style.backgroundColor = "";
+        boardDiv[i].textContent = ""
+        boardDiv[i].disabled = false;
     }
 
+    // rule who have turn in next game
     if (playerMark === "X") {
         turn = 1;
         playerTwoName.parentElement.style.backgroundColor ="#25bbf5";
