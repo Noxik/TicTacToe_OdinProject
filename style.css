@@ -33,17 +33,18 @@ label, p {
 
 #mainboard {
     display: none;
-    grid-template: auto auto / repeat(3, 1fr);
+    grid-template: repeat(3, auto) / repeat(3, 1fr);
     gap: 16px;
     margin: 10vh;
     place-content: center;
 }
 
 #result {
-    grid-column: 1/4;
+    grid-column: 2;
     place-self: center;
     font-size: 2rem;
     font-weight: 700;
+    justify-self: center;
 }
 #players {
     display: flex;
@@ -94,4 +95,10 @@ label, p {
 
 .field:hover:enabled {
     background-color: rgb(218, 238, 255);
+}
+
+#playAgain{
+    display: flex;
+    justify-self: center;
+    grid-area: 1/1/2/4;
 }

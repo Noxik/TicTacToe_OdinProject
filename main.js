@@ -6,13 +6,14 @@ let playerTwoName = document.getElementById("player2name")
 let start = document.getElementById("start")
 let mainboard = document.getElementById("mainboard")
 let result = document.getElementById("result")
-
+let playAgainBtn = document.getElementById("playAgain")
 
 const Player = (name) => {
     const sayName = () => console.log(`Hello ${name}!`)
     return {sayName}
 }
 
+playAgainBtn.addEventListener("click", playAgain)
 
 start.addEventListener("click", () => {
 players.style.display = "none";
@@ -55,9 +56,11 @@ boardDiv.forEach( function(e) {
 if (turn %2 !== 0) {
     playerOneName.parentElement.style.backgroundColor ="#25bbf5";
     playerTwoName.parentElement.style.backgroundColor ="";
+    result.textContent = "Now O turn"
 } else {
     playerTwoName.parentElement.style.backgroundColor ="#25bbf5";
     playerOneName.parentElement.style.backgroundColor ="";
+    result.textContent = "Now X turn"
 }
 turn++
 
@@ -85,12 +88,14 @@ function checkWinner() {
         if (gameBoard.board[winFields[i][0]] == gameBoard.board[winFields[i][1]] 
         && gameBoard.board[winFields[i][0]] == gameBoard.board[winFields[i][2]]) {
 
-// change backgroundcolor of win fields (under O or X marks)
+// change background-color of win fields (under O or X marks)
     for (let j=0; j<winFields[i].length; j++) {
         boardDiv[winFields[i][j]].style.backgroundColor = "#7fffd4"
         }
         winner = gameBoard.board[winFields[i][0]];
         boardDiv.forEach(e => e.disabled = true);  
+
+       
 
         if (winner === "O") {
             result.textContent = `Player 1 ${playerOneIn.value} won!!`;
@@ -109,7 +114,40 @@ function checkWinner() {
     console.log("tie");
     result.textContent = "It's Tie! Play again :)";
     playerTwoName.parentElement.style.backgroundColor ="";
-    playerOneName.parentElement.style.backgroundColor ="";
-        }
+    playerOneName.parentElement.style.backgroundColor ="";   
+    }
 
 }    
+
+function playAgain() {
+    winner = undefined
+    turn = 0;
+    gameBoard.board = [1,2,3,4,5,6,7,8,9];
+    result.textContent = ""
+
+    playerOneName.parentElement.style.backgroundColor =""
+    playerTwoName.parentElement.style.backgroundColor =""
+
+    let buttons = document.querySelectorAll("button")
+    for (let i=0; i<buttons.length; i++) {
+        buttons[i].disabled = false
+    }
+    let fields = document.querySelectorAll(".field");
+    for (let i=0; i<fields.length; i++) {
+        fields[i].textContent = ""
+    }
+
+    for (let i=0; i<boardDiv.length; i++) {
+        boardDiv[i].style.backgroundColor = ""
+    }
+
+    if (playerMark === "X") {
+        turn = 1;
+        playerTwoName.parentElement.style.backgroundColor ="#25bbf5";
+        result.textContent = "Now X turn"
+    } else {
+        turn = 0;
+        playerOneName.parentElement.style.backgroundColor ="#25bbf5";
+        result.textContent = "Now O turn"
+    }
+}
