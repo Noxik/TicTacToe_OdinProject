@@ -1,3 +1,4 @@
+
 const Player = (name) => {
     const sayName = () => console.log(`Hello ${name}!`)
     console.log(name)
@@ -10,6 +11,32 @@ let playerOneIn = document.getElementById("p1")
 let playerTwoIn = document.getElementById("p2")
 let playerOneDiv = document.getElementById("player1name")
 let playerTwoDiv = document.getElementById("player2name")
+
+//Darkmode switch
+document.getElementById("darkmode").addEventListener("click", () => {
+  if (document.getElementById("darkmode").checked === true) {
+    
+    //background + font
+    document.querySelector("body").style = "background-color: #1c2225; color: #FFFFFF";
+    
+    //buttons
+      for (let i=0; i<document.querySelectorAll(".btn").length; i++) {
+        document.querySelectorAll(".btn")[i].style = "background-color: #46424f; color: #FFFFFF"
+        }
+
+  } else {
+  //RETURN TO DEFAULT
+    //background + font
+    document.querySelector("body").style = "background-color: #5bcaf5; color: #000"
+   
+    //buttons
+   for (let i=0; i<document.querySelectorAll(".btn").length; i++) {
+    document.querySelectorAll(".btn")[i].style = "background-color: #ffea8c; color: #000"
+    }
+  }
+})
+
+
 
 //AI
 let playerAiIn = document.getElementById("p1vai")
@@ -35,7 +62,7 @@ let whoPlay
         const player2 = Player(playerTwoIn.value)
         player2.sayName()
     
-        playerOneDiv.parentElement.style.backgroundColor ="#25bbf5";
+        playerOneDiv.parentElement.style.backgroundColor ="#a0d2e5";
 
         gameBoard.whoPlay = "pvp"
     })
@@ -48,16 +75,23 @@ document.getElementById("startpve").addEventListener("click", () => {
     p1name.textContent = playerAiIn.value;
     playerOneDiv.appendChild(p1name)
 
+    let aiName 
+    if (document.getElementById("dumb").checked === true) {
+      aiName = "Dumb"
+    } else if (document.getElementById("god").checked) {
+      aiName = "GOD!"
+    }
+
     let p2name = document.createElement("p");
-    p2name.textContent = `AI level: ${document.querySelector("select").value}`;
+    p2name.textContent = `AI level: ${aiName}`;
     playerTwoDiv.appendChild(p2name)
 
     const player1 = Player(playerAiIn.value)
     player1.sayName();
-    const player2 = Player(document.querySelector("select").value)
+    const player2 = Player(aiName)
     player2.sayName()
 
-    playerOneDiv.parentElement.style.backgroundColor ="#25bbf5";
+    playerOneDiv.parentElement.style.backgroundColor ="#a0d2e5";
     
     gameBoard.whoPlay = "pve"
 })
@@ -83,22 +117,21 @@ const gameFlow = (() => {
         
         // change background-color of win fields (under O or X marks)
             for (let j=0; j<winFields[i].length; j++) {
-                displayController.boardDiv[winFields[i][j]].style.backgroundColor = "#7fffd4"
+                displayController.boardDiv[winFields[i][j]].style.backgroundColor = "#1fe1a0"
                 }
                 gameFlow.winner = gameBoard.board[winFields[i][0]];
                 displayController.boardDiv.forEach(e => e.disabled = true);  
         
                 if (gameFlow.winner === "O") {
                     result.textContent = `Player O ${gameBoard.playerOneIn.value} won!!`;
-                    gameBoard.playerOneDiv.parentElement.style.backgroundColor ="#7fffd4"
+                    gameBoard.playerOneDiv.parentElement.style.backgroundColor ="#1fe1a0"
                     gameBoard.playerTwoDiv.parentElement.style.backgroundColor =""
                 } else {
                     result.textContent = `Player X ${gameBoard.playerTwoIn.value} won!!`;
-                    gameBoard.playerTwoDiv.parentElement.style.backgroundColor ="#7fffd4"
+                    gameBoard.playerTwoDiv.parentElement.style.backgroundColor ="#1fe1a0"
                     gameBoard.playerOneDiv.parentElement.style.backgroundColor =""
                 }
-            }
-        
+            }       
         }
         
             if (gameBoard.board.every(elem => ["O","X"].indexOf(elem) > -1) 
@@ -110,7 +143,6 @@ const gameFlow = (() => {
             gameFlow.winner = "XO"    
         }
         
-    //   console.log(123, gameFlow.winner)
     
     }    
         
@@ -128,7 +160,7 @@ const gameFlow = (() => {
                     displayController.playerMark = "O";
                     displayController.turn++;
                     gameBoard.playerTwoDiv.parentElement.style.backgroundColor =""
-                    gameBoard.playerOneDiv.parentElement.style.backgroundColor ="#25bbf5"
+                    gameBoard.playerOneDiv.parentElement.style.backgroundColor ="#a0d2e5"
                 }
                 gameFlow.checkWinner()
             }
@@ -152,19 +184,20 @@ const gameFlow = (() => {
             // rule who have turn in next game
             if (displayController.playerMark === "X") {
                 displayController.turn = 1;
-                gameBoard.playerTwoDiv.parentElement.style.backgroundColor ="#25bbf5";
+                gameBoard.playerTwoDiv.parentElement.style.backgroundColor ="#a0d2e5";
                 result.textContent = "Now X turn"
     
             // AI move after play again if O win or started previous game
-                if (gameBoard.whoPlay === "pve" && document.querySelector("select").value === "dumb") {
+                if (gameBoard.whoPlay === "pve" && document.getElementById("dumb").checked === true) {
                     setTimeout(() => {
                         aiMove();
                         gameFlow.result.textContent = "Now O turn"
                     }, 500);
-                    } else if (gameBoard.whoPlay === "pve" && document.querySelector("select").value === "hard") {
+                    } else if (gameBoard.whoPlay === "pve" && document.getElementById("god").checked === true) {
                     console.log("again Godmode :)");
-                   
+                    document.getElementById("boardgame").style.pointerEvents = "none";
                     setTimeout(() => {
+                   
                     let place = gameFlow.minimax(gameBoard.board, "X").index
         gameBoard.board[place] = "X";
         displayController.boardDiv[place].textContent = "X";
@@ -172,12 +205,14 @@ const gameFlow = (() => {
         displayController.playerMark = "O";
         displayController.turn++;
         gameBoard.playerTwoDiv.parentElement.style.backgroundColor =""
-        gameBoard.playerOneDiv.parentElement.style.backgroundColor ="#25bbf5";
-        result.textContent = "Now O turn"}, 500);
+        gameBoard.playerOneDiv.parentElement.style.backgroundColor ="#a0d2e5";
+        result.textContent = "Now O turn"
+        document.getElementById("boardgame").style.pointerEvents = "auto";
+      }, 500);
                     }
             } else {
                 displayController.turn = 0;
-                gameBoard.playerOneDiv.parentElement.style.backgroundColor ="#25bbf5";
+                gameBoard.playerOneDiv.parentElement.style.backgroundColor ="#a0d2e5";
                 result.textContent = "Now O turn"
             }
         }
@@ -295,12 +330,12 @@ console.log(displayController.turn)
 //added color to player turn
   
     if (displayController.turn %2 !== 0) {
-        gameBoard.playerOneDiv.parentElement.style.backgroundColor ="#25bbf5";
+        gameBoard.playerOneDiv.parentElement.style.backgroundColor ="#a0d2e5";
         gameBoard.playerTwoDiv.parentElement.style.backgroundColor ="";
         gameFlow.result.textContent = "Now O turn"
     } else {
         gameBoard.playerOneDiv.parentElement.style.backgroundColor ="";
-        gameBoard.playerTwoDiv.parentElement.style.backgroundColor ="#25bbf5";
+        gameBoard.playerTwoDiv.parentElement.style.backgroundColor ="#a0d2e5";
         gameFlow.result.textContent = "Now X turn"
     }
         
@@ -318,7 +353,7 @@ console.log(displayController.turn)
 
     //AI move after player click
     // DUMB mode
-    if (gameBoard.whoPlay === "pve" && document.querySelector("select").value === "dumb" && gameFlow.winner === undefined) {
+    if (gameBoard.whoPlay === "pve" && document.getElementById("dumb").checked === true && gameFlow.winner === undefined) {
     console.log("dumb AF");
     // disable clicking inside boardgame to prevent multiple player moves;
     document.getElementById("boardgame").style.pointerEvents = "none";
@@ -335,8 +370,9 @@ console.log(displayController.turn)
     }
 
     // GODMODE
-    if (gameBoard.whoPlay === "pve" && document.querySelector("select").value === "hard" && gameFlow.winner === undefined) {         
+    if (gameBoard.whoPlay === "pve" && document.getElementById("god").checked === true && gameFlow.winner === undefined) {         
         console.log("GODMODE!");
+    document.getElementById("boardgame").style.pointerEvents = "none";    
     setTimeout(() => {
             let place = gameFlow.minimax(gameBoard.board, "X").index
         gameBoard.board[place] = "X";
@@ -345,7 +381,8 @@ console.log(displayController.turn)
         displayController.playerMark = "O";
         displayController.turn++;
         gameBoard.playerTwoDiv.parentElement.style.backgroundColor =""
-        gameBoard.playerOneDiv.parentElement.style.backgroundColor ="#25bbf5"
+        gameBoard.playerOneDiv.parentElement.style.backgroundColor ="#a0d2e5"
+        document.getElementById("boardgame").style.pointerEvents = "auto"
         gameFlow.result.textContent = "Now O turn"
         gameFlow.checkWinner()   
     }, 800);

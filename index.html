@@ -9,6 +9,12 @@
     <title>Tic Tac Toe</title>
 </head>
 <body>
+    <div class="switch">
+        <p>dark mode switch</p>
+    <input type="checkbox" id="darkmode">
+    <label id="darklabel" for="darkmode"></label>
+
+</div>
    <div class="container">
     <div id="players">
         <div id="letsplay">
@@ -22,13 +28,15 @@
         </div>
         <div class="playername">
             <p>Player vs AI</p>
-          AI level:
-            <select name="aipower" id="aipower">
-              <option value="dumb">Dumb</option>
-              <option value="hard">GOD!</option>
-            </select>
-            <label>Player O name: <input type="text" id="p1vai"></label>
-            <button id="startpve" class="btn">Start PvAI</button>
+            <label>Player O name: <input type="text" id="p1vai" required></label>
+            <strong>AI level:</strong>
+          <div id="chooseAi">
+            <label><input type="radio" name="aipower" value="Dumb" id="dumb" checked> Dumb</label>
+            <label><input type="radio" name="aipower" value="God!" id="god" required> GOD!</label>
+        </div>
+        
+        <button type="submit" id="startpve" class="btn">Start PvAI</button>
+          </div>
         </div>
     </div>
     <div id="mainboard">

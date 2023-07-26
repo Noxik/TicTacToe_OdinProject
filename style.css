@@ -3,8 +3,56 @@
     padding: 0
 }
 
+.switch {
+  margin-top: 1rem;
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+
+.switch label {
+    margin-top: 0.5rem;
+    position: relative;
+    width: 80px;
+    height: 30px;
+    display: block;
+    background: #d9d9d9;
+    border-radius: 100px;
+    cursor: pointer;
+    box-shadow: inset 0px 5px 15px rgba(0,0,0,0.3), inset 0px -5px 15px rgba(255,255,255,0.3);
+}
+
+.switch label:after{
+    content: '';
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    background: #f2f2f2;
+    border-radius: 100px;
+    top: 5px;
+    left: 10px;
+    transition: 1.0s;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+  }
+
+ .switch input:checked ~ label:after{
+    left: 70px;
+    transform: translateX(-100%);
+    background: linear-gradient(180deg,#777,#3a3a3a);
+  }
+  .switch input:checked ~ label{
+    background: #242424;
+}
+
+.switch input{
+    display: none;
+  }
+
 body {
-    background-color: #7fdbff;
+    background-color: #5bcaf5;
 }
 
 p {
@@ -16,18 +64,23 @@ label, select, #players p {
     margin-bottom: 1rem
 }
 
+.container {
+    display:flex;
+    justify-content: center;
+}
+
 .btn {
     padding: 16px 32px;
     border-radius: 48px;
     background-color: #ffea8c;
-    border: 1px solid #ffea8c;
+    border: none;
     font-size: 1rem;
     font-weight: 600;
+    margin-top: 0.5rem
 }
 
 .btn:hover {
-    background-color: #f3ffac;
-    border: 1px solid #f3ffac;
+    filter: brightness(110%);
     cursor: pointer;
 }
 
@@ -49,16 +102,21 @@ label, select, #players p {
     justify-self: center;
 }
 #players {
+    margin-top: 2rem;
     display: grid;
     grid-template-columns: auto auto;
     grid-template-areas: "play play" "a b";
-    position: fixed;
-    gap: 20px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    gap: 10px;
     align-items: center;
     text-align: center;
+}
+
+#chooseAi {
+    margin: 0.5rem 0 0.5rem 0;
+}
+
+#chooseAi label {
+    margin-left: 10px;
 }
 
 #letsplay {
@@ -71,6 +129,7 @@ align-items: center;
     flex-direction: column;
     align-items: center;
     padding: 16px;
+    margin: 0 2rem 0 2rem
 }
 
 #startBtn {
